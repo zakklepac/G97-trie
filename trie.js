@@ -11,7 +11,7 @@ class Trie {
 
   insert(word) {
     let node = this.root;
-    for (var i = 0; i < word.length; i++) {
+    for (let i = 0; i < word.length; i++) {
       if (!node.children[word[i]]) {
         node.children[word[i]] = new Node(word[i]);
       }
@@ -61,10 +61,48 @@ class Trie {
     }
   }
 
-  depthFirstSearch(prefix) {}
-  breadthFirstSearch(prefix) {
-    
+  depthFirstSearch(prefix){
+    let stack = [this];
+    let current;
+
+    while (stack.length !== 0) {
+      stack.map(function(node){
+        return node.key;
+      });
+
+    current = stack.pop();
+
+    if (current.key == prefix){
+      return current;
+    } else {
+      stack.concat(current.children)
+      }
+    }
+
+    return null;
   }
+
+  breadthFirstSearch(prefix){
+    var queue = [this];
+    var current;
+
+      while (queue.length !== 0){
+        queue.map(function(node){
+        return node.key;
+      });
+
+    current = queue.shift(); 
+      if (current.key == prefix){
+        return current;
+      } else {
+        if (current.children){
+          queue = queue.concat(current.children);
+        }
+      }
+    }
+    return null;
+   }
+  
 }
 
 module.exports = { Node, Trie };
